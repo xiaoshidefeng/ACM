@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<math.h>
+#include<algorithm>
+#include<map>
+#include<set>
+#include<queue>
+#include<string>
+#include<iostream>
+using namespace std;
+int main()
+{
+	char ip[100];
+	int b,c,i,j,k,f,s,n;
+	int a[10];
+	scanf("%d",&k);
+	while(k--)
+	{
+		memset(ip,0,sizeof(ip));
+		scanf("%s",ip);
+		f=0;
+		for(i=0,j=1;i<strlen(ip);i++)
+		{
+			if(ip[i]=='.')
+			{
+				a[j]=i;
+				j++;
+			}
+			else
+			{
+				if(ip[i]<48||ip[i]>57){
+					f=1;
+					printf("No\n");
+					break;
+				}	
+			}
+		}
+		if(j>4||strcmp(ip,"...")==0)
+		{
+			printf("No\n");
+			continue;
+		}
+		if(f==1)
+		{
+			continue;
+		}
+		
+		for(i=strlen(ip)-1;i>=0;i--)
+		{
+			for(s=0,j=1;ip[i]!='.'&&i>=0;)
+			{
+				for(n=1;n<=ip[i]-'0';n++)
+				{
+					s+=j;
+				} 
+				j*=10;
+				i--;
+			}
+			if(s>255)
+			{
+				printf("No\n");
+				f=1;
+				break;
+			}
+		}
+		if(f==1)
+		{	
+			continue;
+		}
+		printf("Yes\n");
+	} 
+}

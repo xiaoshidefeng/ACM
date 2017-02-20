@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<math.h>
+#include<algorithm>
+#include<map>
+#include<set>
+#include<queue>
+#include<string>
+#include<iostream>
+using namespace std;
+
+__int64 cow[56];
+
+
+int main()
+{
+	__int64 i,j,k,l,sum;
+	cow[1]=4;
+	for(i=2;i<=55;i++)
+	{
+		cow[i]=cow[i-1]+4;
+	}
+	while(scanf("%I64d",&j)!=EOF)
+	{
+		if(j==0)
+		break;
+		sum=0;
+		while(1)
+		{
+			
+		
+			k=j/4;
+			if(k==0)
+			{
+				printf("%I64d\n",j+sum);
+				break;
+			}
+			else
+			{
+			
+				l=j%4;
+				sum=sum+l*(k+1)+cow[k];
+				
+				j-=4;
+			}
+		}
+	}
+}

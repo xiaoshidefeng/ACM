@@ -1,0 +1,55 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<math.h>
+#include<algorithm>
+#include<map>
+#include<set>
+#include<string>
+#include<iostream>
+using namespace std;
+int main()
+{
+	char a[3000];
+	int i,j,k,len1,f;
+	while(scanf("%s",&a)!=EOF)
+	{
+		len1=strlen(a);
+		if(len1%2==0)
+		{
+			f=0;
+			for(i=0,j=len1-1;i<len1/2;i++,j--)
+			{
+				if(a[i]!=a[j])
+				{
+					f=1;
+					break;
+				}
+			}
+			if(f==1)
+			{
+				printf("0\n");
+			}
+			else
+			printf("1\n");
+		}
+		if(len1%2==1)
+		{
+			f=0;
+			for(i=0,j=len1-1;i<len1/2;i++,j--)
+			{
+				if(a[i]!=a[j])
+				{
+					f=1;
+					break;
+				}
+			}
+			if(f==1)
+			{
+				printf("0\n");
+			}
+			else
+			printf("1\n");
+		}
+	}
+}
