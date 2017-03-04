@@ -50,12 +50,13 @@ void bfs()
 		temp2.val=(temp2.val/10)*10;
 		for(ge=0;ge<=9;ge+=2)
 		{
-			++temp2.val;
+			
 			if(pt[temp2.val]&&!vis[temp2.val])
 			{
 				q.push(temp2);
 				vis[temp2.val]=1;
 			}
+		 	++temp2.val;
 		}
 		
 		temp2=temp1;
@@ -63,12 +64,13 @@ void bfs()
 		temp2.val=(temp2.val/100)*100+ge;
 		for(shi=0;shi<=9;shi++)
 		{
-			temp2.val+=10;
+			
 			if(pt[temp2.val]&&!vis[temp2.val])
 			{
 				q.push(temp2);
 				vis[temp2.val]=1;
 			}
+			temp2.val+=10;
 		}
 		
 		temp2=temp1;
@@ -76,26 +78,28 @@ void bfs()
 		temp2.val=(temp2.val/1000)*1000+shi;
 		for(bai=0;bai<=9;bai++)
 		{
-			temp2.val+=100;
+			
 			if(pt[temp2.val]&&!vis[temp2.val])
 			{
 				q.push(temp2);
 				vis[temp2.val]=1;
 			}
+			temp2.val+=100;
 		}
 		
 		
 		temp2=temp1;
 		bai=temp2.val%1000;
-		temp2.val=bai;
+		temp2.val=bai+1000;
 		for(qian=0;qian<=9;qian++)
 		{
-			temp2.val+=1000;
+			
 			if(pt[temp2.val]&&!vis[temp2.val])
 			{
 				q.push(temp2);
 				vis[temp2.val]=1;
 			}
+			temp2.val+=1000;
 		}
 	}
 	if(temp1.val!=b)

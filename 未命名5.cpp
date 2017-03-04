@@ -17,11 +17,12 @@ int dp[501];
 moneys m[501];
 int main()
 {
+	freopen("f:/input.txt", "r", stdin);
 	int zu,i,j,k,n,e,f;
 	scanf("%d",&zu);
 	while(zu--)
 	{
-		memset(dp,999999,sizeof(dp));
+		memset(dp,-999999,sizeof(dp));
 		memset(m,0,sizeof(m));
 		scanf("%d%d",&e,&f);
 		scanf("%d",&n);
@@ -35,10 +36,11 @@ int main()
 		{
 			for(j=m[i].wei;j<e;j++)
 			{
-				dp[j]=min(dp[j],dp[j-m[i].wei]+m[i].val);
+				for(int x=1;x*m[i].wei<e;x++) 
+					dp[j]=min(dp[j],dp[j-x*m[i].wei]+x*m[i].val);
 			}
 		}
-		if(dp[f]==999999)
+		if(dp[f]==-999999)
 			printf("This is impossible.\n");
 		else
 			printf("The minimum amount of money in the piggy-bank is %d.\n",dp[e]);
