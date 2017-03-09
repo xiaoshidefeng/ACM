@@ -24,60 +24,70 @@ struct bs{
 };
 int x,y;
 int maps[102][102];
+int maxx[102][102];
+int minn[102][102];
+
 //int vis[102][102];
 
 
 
 void bfs()
 {
-	queue<bs>q;
-	int maxx=-99999;
-	bs b,temp1,temp2,temp3;
-	b.lx=b.ly=1;
-	b.val=maps[1][1];
-	//b.ma=maps[1][1];
-	q.push(b);
-	while(!q.empty())
+	CLR(maxx,0);
+	CLR(minn,0);
+	
+	maxx[1][1]=maps[1][1];
+	minn[1][1]=maps[1][1];
+	for(int i=2;i<=x;i++)
 	{
-		temp1=q.front();
-		
-		if(temp1.lx==x&&temp1.ly==y)
-		{
-			if(maxx<temp1.val)
-				maxx=temp1.val;
-			//printf("%d\n",maxx);
-		}
-		
-		q.pop();
-		temp2=temp3=temp1;
-		if(temp1.lx<x)
-		{
-			++temp2.lx;
-			if(maps[temp2.lx][temp2.ly]==0)
+		if(maps[i][1]==0)
 			{
-				temp2.val=-temp2.val;
+				int t;
+				t=-maxx[i-1][1];
+				maxx[i][1]=-minn[i-1][1];
+				minn[i][1]=t;
 			}else{
-				temp2.val+=maps[temp2.lx][temp2.ly];
+				maxx[i][1]=maxx[i-1][1]+maps[i][1];
+				minn[i][1]=minn[i-1][1]+maps[i][1];
+				//printf("%d\n",max(maxx[i][1],minn[i][1]));
 			}
-			q.push(temp2);
-		}
-			
-		if(temp1.ly<y)
-		{
-			++temp3.ly;
-		
-		
-			if(maps[temp3.lx][temp3.ly]==0)
-			{
-				temp3.val=-temp3.val;
-			}else{
-				temp3.val+=maps[temp3.lx][temp3.ly];
-			}
-			q.push(temp3);
-		}	
 	}
 	
-	printf("%d\n",maxx);
+	for(int i=2;i<=y;i++)
+	{
+		if(maps[1][i]==0)
+			{
+				int t;
+				t=-maxx[1][i-1];
+				maxx[1][i]=-minn[1][i-1];
+				minn[1][i]=t;
+			}else{
+				maxx[1][i]=maxx[1][i-1]+maps[1][i];
+				minn[1][i]=minn[1][i-1]+maps[1][i];
+				//printf("%d\n",max(maxx[1][i],minn[1][i]));
+			}
+	}
+	
+	
+	for(int i=2;i<=x;i++)
+	{
+		for(int j=2;j<=y;j++)
+		{
+			if(maps[i][j]==0)
+			{
+				int t;
+				t=-max(maxx[i-1][j],maxx[i][j-1]);
+				maxx[i][j]=-min(minn[i-1][j],minn[i][j-1]);
+				minn[i][j]=t;
+			}else{
+				maxx[i][j]=max(maxx[i-1][j],maxx[i][j-1])+maps[i][j];
+				minn[i][j]=min(minn[i-1][j],minn[i][j-1])+maps[i][j];
+				//printf("%d\n",max(maxx[i][j],minn[i][j]));
+			}
+		}
+	}
+	
+	printf("%d\n",max(maxx[x][y],minn[x][y]));
 	
 }
 

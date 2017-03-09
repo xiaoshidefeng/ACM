@@ -49,7 +49,7 @@ void bfs()
 			}else{
 				maxx[i][1]=maxx[i-1][1]+maps[i][1];
 				minn[i][1]=minn[i-1][1]+maps[i][1];
-				printf("%d\n",max(maxx[i][1],minn[i][1]));
+				//printf("%d\n",max(maxx[i][1],minn[i][1]));
 			}
 	}
 	
@@ -64,7 +64,7 @@ void bfs()
 			}else{
 				maxx[1][i]=maxx[1][i-1]+maps[1][i];
 				minn[1][i]=minn[1][i-1]+maps[1][i];
-			//	printf("%d\n",max(maxx[x][y],minn[x][y]));
+				//printf("%d\n",max(maxx[1][i],minn[1][i]));
 			}
 	}
 	
@@ -76,13 +76,13 @@ void bfs()
 			if(maps[i][j]==0)
 			{
 				int t;
-				t=-maxx[i][j];
-				maxx[i][j]=-minn[i][j];
+				t=-max(maxx[i-1][j],maxx[i][j-1]);
+				maxx[i][j]=-min(minn[i-1][j],minn[i][j-1]);
 				minn[i][j]=t;
 			}else{
 				maxx[i][j]=max(maxx[i-1][j],maxx[i][j-1])+maps[i][j];
 				minn[i][j]=min(minn[i-1][j],minn[i][j-1])+maps[i][j];
-				printf("%d\n",max(maxx[x][y],minn[x][y]));
+				//printf("%d\n",max(maxx[i][j],minn[i][j]));
 			}
 		}
 	}
