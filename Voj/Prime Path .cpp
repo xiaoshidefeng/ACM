@@ -47,7 +47,7 @@ void bfs()
 		++temp1.bu;
 		
 		temp2=temp1;
-		temp2.val=(temp2.val/10)*10;
+		temp2.val=(temp2.val/10)*10+1;
 		for(ge=0;ge<=9;ge+=2)
 		{
 			
@@ -56,7 +56,7 @@ void bfs()
 				q.push(temp2);
 				vis[temp2.val]=1;
 			}
-		 	++temp2.val;
+		 	temp2.val+=2;
 		}
 		
 		temp2=temp1;

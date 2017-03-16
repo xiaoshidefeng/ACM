@@ -113,7 +113,7 @@ void bfs()
 
 int main()
 {
-	freopen("f:/input.txt", "r", stdin);
+	//freopen("f:/input.txt", "r", stdin);
 
 		CLR(maps,0);
 		CLR(vis,0);
