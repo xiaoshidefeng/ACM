@@ -16,137 +16,145 @@ const double PI = acos(-1.0);
 const int INF = 0x3f3f3f3f;
 const int N=2e5+7;
 
-typedef struct tre{
-	int a,b,val;
-}tre;
+#define lson l , m , rt << 1
+#define rson m + 1 , r , rt << 1 | 1
+const int maxn = 222222;
 
-tre t[200002];
-int q[200002],sum,maxx,A,B;
+int MAX[maxn<<2];
+int MIN[maxn<<2];
+int SUM[maxn<<2];
+int max(int a,int b){if(a>b)return a;else return b;}
+int min(int a,int b){if(a<b)return a;else return b;}
 
-void build(int x, int y, int num)
+void PushUP(int rt)
 {
-	t[num].a = x;
-	t[num].b = y;
-	if(x==y) t[num].val = q[y]; 	//叶子节点
-	else{
-		build(x,MID(x,y),num+num);	//左 
-		build(MID(x,y)+1,y,num+num+1);	//右 
-		
-		t[num].val = t[num+num].val + t[num+num+1].val;
-	} 
+  MAX[rt] = max(MAX[rt<<1] , MAX[rt<<1|1]);
+  MIN[rt] = min(MIN[rt<<1] , MIN[rt<<1|1]);
+  SUM[rt] = SUM[rt<<1] + SUM[rt<<1|1];
 }
 
-void query(int x, int y, int num)
-{
-	if(x<=t[num].a&&y>=t[num].b)
-	{
-		if(maxx<t[num].val)
-			maxx= t[num].val;
-	}
-	else
-	{
-		int min = MID(t[num].a,t[num].b);
-		if(x>min) query(x,y,num + num +1);
-		else if(y<=min) query(x,y,num+num);
-		else
-		{
-			query(x, y, num + num);
-			query(x, y, num + num +1);
-		}
-	}
+void build(int l,int r,int rt) {
+  if (l == r)
+    {
+    scanf("%d",&MAX[rt]);
+    MIN[rt] = MAX[rt];
+    SUM[rt] = MAX[rt];
+    //printf("mi = %d\n",MIN[rt]);
+  //    printf("ma = %d\n",MAX[rt]);
+    return ;
+  }
+  int m = (l + r) >> 1;
+  build(lson);
+  build(rson);
+  PushUP(rt);
 }
 
-void add(int x,int y,int num)
+void update(int p,int tihuan,int l,int r,int rt)
 {
-	t[num].val+=y;
-	if(t[num].a==x&&t[num].b==x) return;
-	if(x>MID(t[num].a,t[num].b)) add(x, y, num+num+1);
-	else add(x, y, num + num);
+  if (l == r) {
+    MAX[rt] = tihuan;
+    MIN[rt] = tihuan;
+    SUM[rt] = tihuan;
+    return ;
+  }
+  int m = (l + r) >> 1;
+  if (p <= m) update(p , tihuan ,lson);
+  else update(p , tihuan , rson);
+  PushUP(rt);
 }
 
-void sub(int x, int y, int num)
+void update1(int p,int add,int l,int r,int rt)
 {
-	t[num].val-=y;
-	if(t[num].a==x&&t[num].b==x) return;
-	if(x>MID(t[num].a,t[num].b)) sub(x, y, num+num+1);
-	else sub(x, y, num + num);
+  if (l == r) {
+    SUM[rt] = SUM[rt] + add;
+    return ;
+  }
+  int m = (l + r) >> 1;
+  if (p <= m) update1(p , add ,lson);
+  else update1(p , add , rson);
+  PushUP(rt);
 }
 
-
-void update(int x, int y, int num)
+int query(int L,int R,int l,int r,int rt)
 {
-	if(x<=t[num].a&&y>=t[num].b)
-		t[num].val = B;
-	else
-	{
-		int min = MID(t[num].a,t[num].b);
-		if(x>min) query(x,y,num + num +1);
-		else if(y<=min) query(x,y,num+num);
-		else
-		{
-			query(x, y, num + num);
-			query(x, y, num + num +1);
-		}
-	}
-	
-	
-} 
+  if (L <= l && r <= R)
+  {
+    return MAX[rt];
+  }
+  int m = (l + r) >> 1;
+  int ret = -1;
+  if (L <= m) ret = max(ret , query(L , R , lson));
+  if (R > m)  ret =  max(ret , query(L , R , rson));
+  return ret;
+}
 
-void tquery(int x, int y, int num)
+int query1(int L,int R,int l,int r,int rt)
 {
-	if(x==t[num].a&&y==t[num].b)
-		sum==t[num].val;
-	else
-	{
-		int min = MID(t[num].a,t[num].b);
-		if(x>min) query(x,y,num + num +1);
-		else if(y<=min) query(x,y,num+num);
-		else
-		{
-			query(x, y, num + num);
-			query(x, y, num + num +1);
-		}
-	}
+  if (L <= l && r <= R)
+  {
+    return MIN[rt];
+  }
+  int m = (l + r) >> 1;
+  int ret = 99999;
+  if (L <= m) ret = min(ret , query1(L , R , lson));
+  if (R > m)  ret =  min(ret , query1(L , R , rson));
+  return ret;
+}
+
+int queryhe(int L,int R,int l,int r,int rt)
+{
+  if (L <= l && r <= R)
+  {
+    return SUM[rt];
+  }
+  int m = (l + r) >> 1;
+  int ret = 0;
+  if (L <= m) ret += queryhe(L , R , lson);
+  if (R > m)  ret +=  queryhe(L , R , rson);
+  return ret;
 }
 
 int main()
 {
-	freopen("f:/input.txt", "r", stdin);
-	int i,j,k,zu,n,e,r;
-	char s[10];
-	
-	while(scanf("%d%d",&n,&zu)!=EOF)
-	{
-		for(j=1;j<=n;j++)
-		{
-			scanf("%d",&q[j]);
-		} 
-		q[0]=0;
-		build(1,n,1);
-		for(i=1;i<=zu;i++)
-		{
-	
-			//scanf("%d",&n);
-			
-			scanf("%s%d%d",s,&A,&B);
-			if(s[0]=='Q')
-			{
-				maxx=0;
-				//scanf("%d%d",&e,&r);
-				query(A,B,1);
-				
-				//printf("%d\n",maxx);
-				
-			}else if(s[0]=='U')
-			{
-				sum = 0;
-				tquery(A,A,1);
-				B=B-sum;
-				printf("%d\n",sum); //sum=0
-				add(A,B,1);
-			}
-			
-		}
-	}
-	
+  int n , m;
+  while (~scanf("%d%d",&n,&m))
+  {
+    build(1 , n , 1);
+    while (m --) {
+      char op[2];
+      int a , b;
+      scanf("%s%d%d",op,&a,&b);
+      if (op[0] == 'Q') //区间求最大
+      {
+         /* for(int i = 1;i<=10;i++)
+          printf("%d ",MAX[i]);
+        puts("");*/
+        printf("%d\n",query(a , b , 1 , n , 1));
+      }
+      else if(op[0]=='U') //单点替换
+        update(a , b , 1 , n , 1);
+      else if(op[0]=='M')//区间求最小
+      {
+        /*for(int i = 1;i<=10;i++)
+          printf("%d ",MIN[i]);
+        puts("");*/
+        printf("%d\n",query1(a , b , 1 , n , 1));
+      }
+      else if(op[0]=='H')//区间求和
+      {
+        printf("%d\n",queryhe(a , b , 1 , n , 1));
+      }
+      else if(op[0]=='S')//单点增加
+      {
+        scanf("%d%d",&a,&b);
+        update1(a , b , 1 , n , 1);
+      }
+       else if(op[0]=='E')//单点减少
+      {
+        scanf("%d%d",&a,&b);
+        update1(a , -b , 1 , n , 1);
+      }
+    }
+  }
+  return 0;
 }
