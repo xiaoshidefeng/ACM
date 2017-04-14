@@ -16,69 +16,56 @@ const double PI = acos(-1.0);
 const int INF = 0x3f3f3f3f;
 const int N=2e5+7;
 
-typedef struct nd{
-	int x,y;
-}nd ;
+struct nd{
+	int a,b;
+};
+nd x[11111];
+nd xx[21111];
 
-nd s[20000];
-
-int d1[20000];
-int d2[20000];
+bool cmp(const nd &q,const nd &w){
+	return q.a<q.b;
+}
 
 int main()
 {
 	//freopen("f:/input.txt", "r", stdin);
-	int zu,i,j,k,m,cnt,f;
-	double x1,y1,nk,kk,n;
-	nd a;
+	int zu,i,j,n,m,k,t,c,cnt,a1,a2,a3,a4;
 	scanf("%d",&zu);
 	while(zu--)
 	{
-		CLR(d1,0);
-		CLR(d2,0);
-		CLR(s,0);
-		scanf("%lf%d",&n,&m);
-		cnt=0;
+		scanf("%d%d%d",&n,&m,&k);
 		for(i=0;i<m;i++)
 		{
-			scanf("%d",&d1[i]);
-		}
-		for(i=0;i<m;i++)
-		{
-			scanf("%d",&d2[i]);
-			if(d1[i]>d2[i])
-			{
-				k=d1[i];
-				d1[i]=d2[i];
-				d2[i]=k;
-			}
-		}
-		cnt=0;
-		kk=0;
-		for(i=0;i<m;i++)
-		{
-			f=0;
-			
-			for(j=0;j<cnt;j++)
-			{
+			scanf("%d%d",&x[i].a,&x[i].b);
+			if(x[i].a>x[i].b){
 				
-				if(d1[i]==s[j].x&&d2[i]==s[j].y)
-				{
-					f=1;
-					break;
-				}
+				t=x[i].a;
+				x[i].a=x[i].b;
+				x[i].b=t;
 			}
-			if(f==0)
-			{
-				s[cnt].x=d1[i];
-				s[cnt].y=d2[i];
-				kk=kk+1.0; 
-				++cnt;
-			}
+			xx[i].a=x[i].a;
+			xx[i].b=x[i].b;
+			
 		}
 		
-		//nk=(double)n;
-		printf("%.3lf\n",kk/n);
+		sort(x,x+m,cmp);
+		cnt=0;
+		c=m;
+		
+		for(i=0;i<m;i++)
+		{
+			a1=x[i].a;
+			a2=x[i].b;
+			
+			for(j=i+1;j<m;j++)
+			{
+				if(a2==x[i].a)
+				{
+					a3=x[i].b;
+					for()
+				}
+			}
+		}
 		
 	}
 }
