@@ -29,7 +29,7 @@ bool cmp(const nd &q,const nd &w){
 int main()
 {
 	//freopen("f:/input.txt", "r", stdin);
-	int zu,i,j,n,m,k,t,c,cnt,a1,a2,a3,a4;
+	int zu,i,j,n,m,k,t,c,cnt,a1,a2,a3,a4,f,x1,y1,x2,y2;
 	scanf("%d",&zu);
 	while(zu--)
 	{
@@ -56,14 +56,42 @@ int main()
 		{
 			a1=x[i].a;
 			a2=x[i].b;
-			
+			f=1;
 			for(j=i+1;j<m;j++)
 			{
 				if(a2==x[i].a)
 				{
 					a3=x[i].b;
-					for()
+					for(int e=0;e<m;e++)
+					{
+						// if((a3==x[e].a&&a1==x[e].b)||(a1==x[e].a&&a3==x[e].b)){
+						// 	f=0;
+						// 	break;
+
+						// }
+						if(a3==x[e].a&&x[e].b!=a1&&x[e].b!=a2)
+						{
+							a4=x[e].b;
+							for()
+						}
+					}
 				}
+				else if(a2==x[i].b)
+				{
+					a3=x[i].a;
+					for(int e=0;e<m;e++)
+					{
+						if((a3==x[e].a&&a1==x[e].b)||(a1==x[e].a&&a3==x[e].b)){
+
+							f=0;
+							break;
+
+						}
+					}
+				}
+
+				x1=a1;
+
 			}
 		}
 		
