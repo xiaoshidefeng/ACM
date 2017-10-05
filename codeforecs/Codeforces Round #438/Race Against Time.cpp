@@ -22,7 +22,7 @@ int main()
 		t2=0;
 	}	
 	h = h*30 + m/2 + s/120;
-	m = m*6 + s/6;
+	m = m*6 + s/10;
 	s = s*6;
 	
 	t1=30*t1;
@@ -32,10 +32,10 @@ int main()
 		t1 = t2;
 		t2 = x;
 	}
-	if((h>=t1&&h<=t2) && (m>=t1&&m<=t2) && (s>=t1&&s<=t2)) {
+	if((h>t1&&h<t2) && (m>t1&&m<t2) && (s>t1&&s<t2)) {
 		printf("YES\n");
 		return 0;
-	}else if((h<=t1 ||h>=t2) && (m<=t1 || m>=t2) && (s<=t1 || s>=t2)) {
+	}else if((h<t1 ||h>t2) && (m<t1 || m>t2) && (s<t1 || s>t2)) {
 		printf("YES\n");
 		return 0;
 	}else {
