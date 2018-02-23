@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define MID(x,y) ((x+y)>>1)
+#define CLR(arr,val) memset(arr,val,sizeof(arr))
+#define FAST_IO ios::sync_with_stdio(false);cin.tie(0);
+const double PI = acos(-1.0);
+const int INF = 0x3f3f3f3f;
+const int N=2e5+7;
+
+char c[200]; 
+
+int main()
+{
+	//freopen("f:/input.txt", "r", stdin);
+	int i,j,k,le,f,cnt;
+	cin>>c;
+	le = strlen(c);
+	for (i = le - 1, cnt = 0; i > 0; i--) {
+		if(c[i] == '0') ++cnt;
+		if (cnt == 6) {
+			for (j = i; j >= 0; j--) {
+				if (c[j] == '1') {
+					cout<<"yes"<<endl;
+					return 0;
+				}
+			}
+		}
+	} 
+	cout<<"no"<<endl;
+}
+
