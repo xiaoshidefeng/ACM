@@ -28,11 +28,8 @@ void init()
 	for(int i=0;i<maxn;i++) dis[i]=INF;	
 }
 
-
-
 int main()
 {
-	//freopen("f:/input.txt", "r", stdin);
 	int x,y,z;
 	while(scanf("%d%d",&n,&m)!=EOF)
 	{
@@ -65,9 +62,6 @@ int main()
 				}
 			}
 		}
-		
 		printf("%d\n",dis[m]);
-		
-		
 	}
 }
