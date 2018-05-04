@@ -45,8 +45,8 @@ struct band {
 	do_A() {
 		swap(a[0], a[7]);
 		swap(a[1], a[6]);
-		swap(a[3], a[5]);
-		swap(a[4], a[4]);
+		swap(a[2], a[5]);
+		swap(a[3], a[4]);
 		
 	}
 	
@@ -55,7 +55,7 @@ struct band {
 		a[3] = a[2], a[4] = a[5];
 		a[2] = a[1], a[5] = a[6];
 		a[1] = a[0], a[6] = a[7];
-		a[0] = temp1, a[7] = a[4];
+		a[0] = temp1, a[7] = temp2;
 	
 	}
 	
@@ -70,9 +70,52 @@ struct band {
 };
 
 band b;
-band vis[N];
+bool vis[N];
+string ans[N];
 
-void vfs() {
+set<int> st;
+
+void bfs() {
+	queue<band> q;
+	q.push(b);
+	int cnt = 1;
+	while(!q.empty()) {
+		band bn = q.front();
+		band bn2 = bn;
+		q.pop();
+		int le = bn.step.length();
+		if (bn.step[le - 1] != 'A' || le < 1) {
+			bn2.do_A();
+			bn2.cantor();
+			if (!vis[bn2.val]) {
+				vis[bn2.val] = 1;
+				bn2.step += "A";
+				ans[bn2.val] = bn2.step;
+				q.push(bn2);
+			}
+		}
+		bn2 = bn;
+		bn2.do_B();
+		bn2.cantor();
+		if (!vis[bn2.val] && (bn2.step[le - 1] != 'B' || bn2.step[le - 2] != 'B' || bn2.step[le - 3] != 'B' || le < 3)) {
+			bn2.step += "B";
+			ans[bn2.val] = bn2.step;
+			q.push(bn2);
+			vis[bn2.val] = 1;
+		}
+		bn2 = bn;
+		bn2.do_C();
+		bn2.cantor();
+		if (!vis[bn2.val] && (bn2.step[le - 1] != 'C' || bn2.step[le - 2] != 'C' || bn2.step[le - 3] != 'C' || le < 3)) {
+			bn2.step += "C";
+			ans[bn2.val] = bn2.step;
+			q.push(bn2);
+			vis[bn2.val] = 1;
+		}
+//		cout<<bn.step<<"\n";
+//		++cnt;
+	}
+//	cout<<cnt;
 	
 }
 
@@ -86,7 +129,27 @@ int main()
 		b.a[i] = i + 1;
 	}
 	b.cantor();
-	vis[0] = b.val;
+	CLR(vis, 0);
+	vis[b.val] = 1;
+	ans[b.val] = b.step;
+	bfs();
+	string start, end;
+	while(cin>>start>>end) {
+//		int le = s.length();
+		band b_ans;
+		int ref[9];
+		for (i = 0 ; i < 8 ; i ++) {
+			ref[start[i] - '0'] = (i + 1);
+		}
+		for (i = 0; i < 8; i ++) {
+			b_ans.a[i] = (ref[end[i] - '0']);
+		}
+		
+		
+		b_ans.cantor();
+		cout<<ans[b_ans.val]<<"\n";
+	}
+	
 //	cout<<b.val;
 }
 
